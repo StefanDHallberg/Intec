@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="${lang == 'dk'} ? 'Gæsteregistrering' : 'Guest Registration'">Guest Registration</title>
+</head>
+
+<body>
+<form th:action="@{/change-lang}" method="POST">
+  <label for="language" th:text="${lang == 'dk'} ? 'Sprog:' : 'Language:'">Language:</label>
+  <select id="language" name="lang" onchange="this.form.submit()">
+    <option value="en" th:selected="${lang == 'en'}">English</option>
+    <option value="dk" th:selected="${lang == 'dk'}">Dansk</option>
+  </select>
+  <noscript><input type="submit" value="Change Language"></noscript>
+</form>
+
+<h1>
+  <span th:text="${lang == 'dk'} ? 'Gæsteregistrering:' : 'Guest Registration:'">Guest Registration:</span>
+</h1>
+
+<form action="/register" method="POST">
+  <input type="hidden" name="lang" th:value="${lang}">
+  <label for="name" th:text="${lang == 'dk'} ? 'Navn:' : 'Name:'">Name:</label>
+  <input type="text" id="name" name="name" required><br><br>
+
+  <label for="company" th:text="${lang == 'dk'} ? 'Firma:' : 'Company:'">Company:</label>
+  <input type="text" id="company" name="company" required><br><br>
+  <label for="companyDropdown" th:text="${lang == 'dk'} ? 'eller vælg fra liste' : 'Or select from list::'">companyDropdown:</label>
+  <select id="companyDropdown" onchange="updateCompany()">
+    <option value="">--Select--</option>
+    <option th:each="company : ${companies}" th:value="${company}" th:text="${company}"></option>
+  </select><br><br>
+
+  <input type="submit" value="register" th:value="${lang == 'dk'} ? 'Registrer' : 'Register'">
+</form>
+
+<div th:if="${registrationResult == 'success'}">
+  <script th:inline="javascript">
+    var successMessage = [[${registrationLang == 'dk' ? 'Du er blevet registreret.' : 'You have been registered.'}]]; 'default';
+    alert(successMessage);
+  </script>
+</div>
+<script>
+  function updateCompany() {
+    var companyDropdown = document.getElementById("companyDropdown");
+    var companyInput = document.getElementById("company");
+    companyInput.value = companyDropdown.value;
+  }
+</script>
+</body>
+</html>

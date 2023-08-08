@@ -1,0 +1,18 @@
+{
+  "groups": [
+    {
+      "name": "spring.datasource.dk",
+      "type": "javax.sql.DataSource",
+      "sourceType": "intec.inteceksame.framework_drivers.DatabaseSource",
+      "sourceMethod": "dkDataSource()"
+    },
+    {
+      "name": "spring.datasource.us",
+      "type": "javax.sql.DataSource",
+      "sourceType": "intec.inteceksame.framework_drivers.DatabaseSource",
+      "sourceMethod": "usDataSource()"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}
